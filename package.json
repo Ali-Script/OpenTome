@@ -2,12 +2,12 @@
   "name": "knowledgeGateway",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev":"dotenv -e .env nodemon server.js",
+    "dev": "dotenv -e .env nodemon server.js",
     "db": "dotenv -e .env -- sequelize-cli db:create --config ./sequelizeConfigs.js",
     "migrate": "dotenv -e .env sequelize-cli db:migrate --config ./sequelizeConfigs.js",
-    "undoMigrate": "dotenv -e .env sequelize-cli db:migrate:undo --config ./sequelizeConfigs.js"
+    "undoMigrate": "dotenv -e .env sequelize-cli db:migrate:undo:all --config ./sequelizeConfigs.js"
   },
   "keywords": [],
   "author": "ali-script",
@@ -19,10 +19,14 @@
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "ioredis": "^5.6.0",
+    "joi": "^17.13.3",
     "morgan": "^1.10.0",
     "mysql2": "^3.14.0",
     "path": "^0.12.7",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "swagger": "^0.7.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "dotenv-cli": "^8.0.0",

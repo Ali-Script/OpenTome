@@ -6,23 +6,13 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
-        primarykey: true,
-        autoincrement: 1000
+        primaryKey: true,
+        autoIncrement: 1000
       },
       userName: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          len: {
-            args: [3, 32],
-            msg: "Username must be between 3 and 32 characters long."
-          },
-          is: {
-            args: [/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9._]{3,32}$/],
-            msg: "Username must contain at least one letter, one number, and can only include letters, numbers, '.', and '_'."
-          }
-        }
       },
       password: {
         type: Sequelize.STRING,
@@ -68,12 +58,10 @@ module.exports = {
       },
       role: {
         type: Sequelize.ENUM("admin", "user"),
-        allowNull: false,
         default: "user"
       },
       provider: {
         type: Sequelize.ENUM("local", "google"),
-        allowNull: false,
         default: "local"
       },
       createdAt: {

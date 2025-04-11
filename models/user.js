@@ -1,26 +1,18 @@
-const { DataTypes } = require("sequelize")
+const { DataTypes } = require("sequelize");
+const sequelize = require("../db");
 
-const User = (sequelize) => sequelize.define("User", {
+const User = sequelize.define("User", {
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
-        primarykey: true,
-        autoincrement: 1000
+        primaryKey: true,
+        autoIncrement: true,
+        initialValue: 1000
     },
     userName: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-            len: {
-                args: [3, 32],
-                msg: "Username must be between 3 and 32 characters long."
-            },
-            is: {
-                args: [/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9._]{3,32}$/],
-                msg: "Username must contain at least one letter, one number, and can only include letters, numbers, '.', and '_'."
-            }
-        }
     },
     password: {
         type: DataTypes.STRING,
@@ -66,18 +58,14 @@ const User = (sequelize) => sequelize.define("User", {
     },
     role: {
         type: DataTypes.ENUM("admin", "user"),
-        allowNull: false,
-        default: "user"
+        defaultValue: "user"
     },
     provider: {
         type: DataTypes.ENUM("local", "google"),
-        allowNull: false,
-        default: "local"
-    },
-},
-    {
-        timestamps: true
-    })
-
+        defaultValue: "local"
+    }
+}, {
+    timestamps: true
+});
 
 module.exports = User;

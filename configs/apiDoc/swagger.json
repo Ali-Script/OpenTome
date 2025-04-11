@@ -1,0 +1,43 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Power By Ali-Script",
+        "version": "1.2.7"
+    },
+    "tags": [
+
+        {
+            "name": "Authentication"
+        }
+    ],
+    "paths":{
+"/signup":{
+    "post":{
+        "tags":["Authentication"],
+        "summary": "test",
+        "description":"Succ",
+        "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "email": "Email Format"
+                                }
+                            }
+                        }
+                    }
+                },
+         "parameters": [],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+}
+    }
+}
