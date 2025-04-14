@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const path = require('path');
 const helmet = require('helmet');
-const swaggerRouter = require('./configs/apiDoc/swaggerRoutes');
+const setupSwagger = require('./configs/apiDoc/swaggerRoutes');
 const { setHeaders } = require("./middleware/headers")
 // * Imports ^
 
@@ -17,7 +17,7 @@ app.use(bodyParser.json())
 app.use(morgan('combined'))
 app.use(cookieParser("rtujh57uhHG)B$&ghy073hy57hbHB)rthrtbdfg$&BH)Hb85h4b84bhe8hb*BH#$*B"))
 app.use(setHeaders);
-app.use("/api-doc", swaggerRouter)
+app.use("/api-doc", setupSwagger)
 const corsOptions = {
     origin: "http://localhost:3000",
     origin: ["https://jajiga.liara.run", "http://localhost:3000"],
@@ -31,7 +31,7 @@ app.use(cors());
 const authRouter = require("./routes/authRouter")
 // * Import Routes ^
 
-app.use("/", authRouter)
+app.use("/auth", authRouter)
 // * Use Routes As Middlewares ^
 
 app.use((req, res) => {

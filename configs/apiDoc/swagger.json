@@ -5,13 +5,13 @@
         "version": "1.2.7"
     },
     "tags": [
-
         {
             "name": "Authentication"
         }
     ],
+    
     "paths":{
-"/signup":{
+"/auth/signup":{
     "post":{
         "tags":["Authentication"],
         "summary": "test",
@@ -32,6 +32,15 @@
          "responses": {
                     "200": {
                         "description": "Succ"
+                    },
+                    "409": {
+                        "description": "User already exists"
+                    },
+                    "422": {
+                        "description": "Email field is empty"
+                    },
+                    "423": {
+                        "description": "Invalid email"
                     },
                     "500": {
                         "description": "Internal Server Error"

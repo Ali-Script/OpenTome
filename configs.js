@@ -15,6 +15,10 @@ const configs = {
     redis: {
         uri: process.env.REDIS_URI
     },
+    email: {
+        nodemailerEmail: process.env.NODEMAILER_EMAIL,
+        nodemailerPassword: process.env.NODEMAILER_EMAIL_PASSWORD
+    },
     domain: process.env.DOMAIN,
     isProduction: process.env.NODE_ENV == "production"
 
