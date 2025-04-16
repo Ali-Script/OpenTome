@@ -19,8 +19,13 @@ const configs = {
         nodemailerEmail: process.env.NODEMAILER_EMAIL,
         nodemailerPassword: process.env.NODEMAILER_EMAIL_PASSWORD
     },
+    jwt: {
+        jwtAccessSecret: process.env.JWT_ACCESS_SECRET,
+        jwtRefreshSecret: process.env.JWT_REFRESH_SECRET
+    },
     domain: process.env.DOMAIN,
     isProduction: process.env.NODE_ENV == "production"
+
 
 }
 

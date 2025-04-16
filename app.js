@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({ limit: "200mb", extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('combined'))
-app.use(cookieParser("rtujh57uhHG)B$&ghy073hy57hbHB)rthrtbdfg$&BH)Hb85h4b84bhe8hb*BH#$*B"))
+app.use(cookieParser())
 app.use(setHeaders);
 app.use("/api-doc", setupSwagger)
 const corsOptions = {

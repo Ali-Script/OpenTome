@@ -30,6 +30,7 @@ const schema = Joi.object({
     books: Joi.object(),
     role: Joi.string().valid('user', 'admin', 'owner').default('user'),
     provider: Joi.string().valid('local', 'google').default('local'),
+    code: Joi.number()
 });
 
 module.exports = schema;
