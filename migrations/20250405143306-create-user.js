@@ -7,7 +7,7 @@ module.exports = {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: 1000
+        autoIncrement: 1000,
       },
       userName: {
         type: Sequelize.STRING,
@@ -45,12 +45,6 @@ module.exports = {
       avatar: {
         type: Sequelize.STRING,
         allowNull: true,
-        validate: {
-          len: {
-            args: [0, 512],
-            msg: "Avatar URL must be less than 512 characters"
-          }
-        }
       },
       books: {
         type: Sequelize.JSON,

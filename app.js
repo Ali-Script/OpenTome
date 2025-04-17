@@ -18,13 +18,13 @@ app.use(morgan('combined'))
 app.use(cookieParser())
 app.use(setHeaders);
 app.use("/api-doc", setupSwagger)
-const corsOptions = {
-    origin: "http://localhost:3000",
-    origin: ["https://jajiga.liara.run", "http://localhost:3000"],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: "include",
-    optionsSuccessStatus: 200
-};
+// const corsOptions = {
+//     origin: "http://localhost:3000",
+//     origin: ["https://jajiga.liara.run", "http://localhost:3000"],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     credentials: "include",
+//     optionsSuccessStatus: 200
+//};
 app.use(cors());
 // * Middlewares ^
 

@@ -6,8 +6,7 @@ const User = sequelize.define("User", {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
-        initialValue: 1000
+        autoIncrement: 1000,
     },
     userName: {
         type: DataTypes.STRING,
@@ -45,12 +44,6 @@ const User = sequelize.define("User", {
     avatar: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate: {
-            len: {
-                args: [0, 512],
-                msg: "Avatar URL must be less than 512 characters"
-            }
-        }
     },
     books: {
         type: DataTypes.JSON,

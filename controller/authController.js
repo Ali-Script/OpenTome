@@ -77,3 +77,12 @@ exports.confirmCode = async (req, res) => {
         return res.status(500).json({ statusCode: 500, message: err.message })
     }
 }
+exports.login = async (req, res) => {
+    try {
+
+        return res.status(200).json({ statusCode: 200, message: "user created Succ" })
+
+    } catch (err) {
+        return res.status(500).json({ statusCode: 500, message: err.message })
+    }
+}
