@@ -16,10 +16,6 @@ const Book = sequelize.define("books", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   cover: {
     type: DataTypes.STRING,
     allowNull: false,
