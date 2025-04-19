@@ -29,9 +29,11 @@ app.use(cors());
 // * Middlewares ^
 
 const authRouter = require("./routes/authRouter")
+const authorController = require("./routes/authorController")
 // * Import Routes ^
 
 app.use("/auth", authRouter)
+app.use("/author", authorController)
 // * Use Routes As Middlewares ^
 
 app.use((req, res) => {

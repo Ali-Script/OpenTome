@@ -11,7 +11,7 @@ const sequelize = new Sequelize({
     database: configs.db.name,
     host: configs.db.host,
     dialect: configs.db.dialect,
-    logging: configs.isProduction ? false : console.log(),
+    logging: configs.isProduction ? false : console.log,
 });
 
 

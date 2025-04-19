@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
 
-const author = sequelize.define("author", {
+const authors = sequelize.define("authors", {
   id: {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
@@ -18,18 +18,14 @@ const author = sequelize.define("author", {
   },
   avatar: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   description: {
-    type: DataTypes.STRING,
-    allowNull: true,
+    type: DataTypes.TEXT,
+    allowNull: false,
   },
-  books: {
-    type: DataTypes.JSON,
-    allowNull: true,
-  }
 }, {
   timestamps: true
 });
 
-module.exports = author;
+module.exports = authors;
