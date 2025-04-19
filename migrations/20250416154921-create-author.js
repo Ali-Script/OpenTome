@@ -7,7 +7,7 @@ module.exports = {
         type: Sequelize.INTEGER.UNSIGNED,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: 1000,
+        autoIncrement: true,
       },
       firstName: {
         type: Sequelize.STRING,
@@ -34,6 +34,9 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    // Set auto-increment start value to 1000 for MySQL
+    await queryInterface.sequelize.query('ALTER TABLE authors AUTO_INCREMENT = 1000;');
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('authors');

@@ -14,6 +14,8 @@ module.exports = {
         allowNull: false,
       },
     });
+
+    await queryInterface.sequelize.query('ALTER TABLE authors AUTO_INCREMENT = 1000;');
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('categories');

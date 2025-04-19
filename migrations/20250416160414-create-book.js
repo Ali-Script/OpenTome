@@ -30,6 +30,8 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.sequelize.query('ALTER TABLE authors AUTO_INCREMENT = 1000;');
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('books');

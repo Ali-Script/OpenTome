@@ -1,6 +1,5 @@
 
-const sequelize = require('../db');
-const User = require('../models/user')
+const { User } = require('../db');
 const nodemailer = require("nodemailer")
 const emailValidator = require("email-validator");
 const configs = require("./../configs")

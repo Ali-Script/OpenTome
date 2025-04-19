@@ -1,13 +1,13 @@
-//const author = require("../models/author")
+const { author } = require("../db")
 exports.create = async (req, res) => {
-    //   try {
-    //     const { firstName, lastName, avarat, description } = req.body
+    try {
+        const { firstName, lastName, avatar, description } = req.body
 
-    //     await author.create({
-    //         firstName, lastName, avarat, description
-    //     })
+        await author.create({
+            firstName, lastName, avatar, description
+        })
 
-    // } catch (err) {
-    //     return res.status(500).json({ statusCode: 500, message: err.message })
-    // }
+    } catch (err) {
+        return res.status(500).json({ statusCode: 500, message: err.message })
+    }
 }
