@@ -15,7 +15,7 @@ const book = (sequelize) =>
         type: DataTypes.STRING,
         allowNull: false,
       },
-      desciption: {
+      description: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -23,9 +23,18 @@ const book = (sequelize) =>
         type: DataTypes.STRING,
         allowNull: false,
       },
+      file: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      totalDownloads: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: true,
+      },
 
     }, {
-    timestamps: true
+    timestamps: true,
+    initialAutoIncrement: 1000,
   });
 
 module.exports = book;

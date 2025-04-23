@@ -2,11 +2,23 @@
     "openapi": "3.0.1",
     "info": {
         "title": "Power By Ali-Script",
-        "version": "1.2.7"
+        "version": "1.1.0"
     },
     "tags": [
         {
             "name": "Authentication"
+        },
+        {
+            "name": "Users"
+        },
+        {
+            "name": "Authors"
+        },
+        {
+            "name": "Books"
+        },
+        {
+            "name": "Categories"
         }
     ],
     
@@ -14,8 +26,8 @@
 "/auth/signup":{
     "post":{
         "tags":["Authentication"],
-        "summary": "test",
-        "description":"Succ",
+        "summary": "Send otp email to user",
+        "description":"",
         "requestBody": {
                     "content": {
                         "application/json": {
@@ -34,13 +46,241 @@
                         "description": "Succ"
                     },
                     "409": {
-                        "description": "User already exists"
+                        "description": "User already exists !"
                     },
                     "422": {
-                        "description": "Email field is empty"
+                        "description": "Email field is empty !"
                     },
                     "423": {
-                        "description": "Invalid email"
+                        "description": "Invalid email !"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/auth/confirmCode":{
+    "post":{
+        "tags":["Authentication"],
+        "summary": "Auth otp code",
+        "description":"",
+        "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "userName":"userName",
+                                    "password":"password",
+                                    "email":"email",
+                                    "code":"OTP-CODE"
+                                }
+                            }
+                        }
+                    }
+                },
+         "parameters": [],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "401": {
+                        "description": "Code has expired !"
+                    },
+                    "402": {
+                        "description": "Incorrect Code !"
+                    },
+                    "409": {
+                        "description": "User already exists !"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/author/create":{
+    "post":{
+        "tags":["Authors"],
+        "summary": "Create new author",
+        "description":"",
+        "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "firstName":"firstName",
+                                    "lastName":"lastName",
+                                    "description":"about author",
+                                    "avatar":"author avatar (image)"
+                                }
+                            }
+                        }
+                    }
+                },
+         "parameters": [],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/author/getAll":{
+    "get":{
+        "tags":["Authors"],
+        "summary": "Get all authors",
+        "description":"",
+         "parameters": [],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/book/create":{
+    "post":{
+        "tags":["Books"],
+        "summary": "Create new book",
+        "description":"",
+        "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "name":"name",
+                                    "description":"description",
+                                    "author_id":"author_id",
+                                    "category_id":"category_id",
+                                    "cover":"book cover (image)"
+                                }
+                            }
+                        }
+                    }
+                },
+         "parameters": [],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "420": {
+                        "description": "Valid formats for cover image : .jpg, .png, .jpeg, .jfif, .pjpeg, .pjp, .webp"
+                    },
+                    "422": {
+                        "description": "Validation err !"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/book/update/uploadFile/{id}":{
+    "put":{
+        "tags":["Books"],
+        "summary": "Upload PDF book file",
+        "description":"",
+        "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "file":"Valid formats: .pdf, .epub, .mobi, .doc, .docx, .txt,.rtf, .odt"
+                                }
+                            }
+                        }
+                    }
+                },
+         "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true"
+                    }
+                ],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "404": {
+                        "description": "no book with this ID was found !"
+                    },
+                    "409": {
+                        "description": "this book is already have a pdf !"
+                    },
+                    "422": {
+                        "description": "Validation err: id and file are required !"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/book/getAll":{
+    "get":{
+        "tags":["Books"],
+        "summary": "Get all books",
+        "description":"",
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/category/create":{
+    "post":{
+        "tags":["Categories"],
+        "summary": "Create new category",
+        "description":"",
+        "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "name":"categoryName"
+                                }
+                            }
+                        }
+                    }
+                },
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "422": {
+                        "description": "Name is required !"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/category/getAll":{
+    "get":{
+        "tags":["Categories"],
+        "summary": "Get all categories",
+        "description":"",
+         "responses": {
+                    "200": {
+                        "description": "Succ"
                     },
                     "500": {
                         "description": "Internal Server Error"

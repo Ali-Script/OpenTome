@@ -11,7 +11,7 @@ exports.signup = async (req, res) => {
         const code = String(Math.floor(1000 + Math.random() * 9000))
 
         const user = await User.findOne({ where: { email } });
-        if (user) return res.status(409).json({ statusCode: 409, message: "User already exists" })
+        if (user) return res.status(409).json({ statusCode: 409, message: "User already exists !" })
 
         let transport = nodemailer.createTransport({
             service: "gmail",
@@ -31,7 +31,7 @@ exports.signup = async (req, res) => {
             if (e) {
                 return res.status(400).json({
                     statusCode: 400,
-                    message: 'Failed to send email',
+                    message: 'Failed to send email !',
                     error: configs.isProduction == false ? e.message : undefined
                 });
             }
@@ -39,7 +39,7 @@ exports.signup = async (req, res) => {
 
             return res.status(200).json({
                 statusCode: 200,
-                message: 'Verification code has been sent to your email',
+                message: 'Verification code has been sent to your email !',
             });
         });
     } catch (err) {
@@ -48,30 +48,30 @@ exports.signup = async (req, res) => {
 }
 exports.confirmCode = async (req, res) => {
     try {
-        //  const { userName, password, email, code } = req.body;
+        const { userName, password, email, code } = req.body;
 
-        // const user = await User.findOne({ where: { email } });
-        // if (user) return res.status(409).json({ statusCode: 409, message: "User already exists" })
+        const user = await User.findOne({ where: { email } });
+        if (user) return res.status(409).json({ statusCode: 409, message: "User already exists !" })
 
-        // const getOtpCode = await redis.mget(`validator ${email}`)
+        const getOtpCode = await redis.mget(`validator ${email}`)
 
-        // if (getOtpCode[0] == null) return res.status(401).json({ statusCode: 401, message: "code has expired" })
-        // else if (code != getOtpCode[0])
-        //     return res.status(409).json({ statusCode: 409, message: "incorrect Code !" })
-        // else if (code == getOtpCode[0]) {
-        //     await User.build({
-        //         userName,
-        //         password,
-        //         email,
-        //     }).save()
+        if (getOtpCode[0] == null) return res.status(401).json({ statusCode: 401, message: "Code has expired !" })
+        else if (code != getOtpCode[0])
+            return res.status(402).json({ statusCode: 402, message: "Incorrect Code !" })
+        else if (code == getOtpCode[0]) {
+            await User.build({
+                userName,
+                password,
+                email,
+            }).save()
+            //!     bcrypt
+            const accessToken = genAccessToken({ email, role: "admin" })
+            const refreshToken = genRefreshToken({ email, role: "admin" })
+            res.cookie('accessToken', "accessToken", { maxAge: 900000 });
+            res.cookie('refreshToken', "refreshToken", { maxAge: 900000 });
 
-        //  const accessToken = genAccessToken({ email, role: "admin" })
-        //  const refreshToken = genRefreshToken({ email, role: "admin" })
-        res.cookie('accessToken', "accessToken", { maxAge: 900000 }); // 15 minutes
-        res.cookie('refreshToken', "refreshToken", { maxAge: 900000 }); // 15 minutes
-
-        return res.status(200).json({ statusCode: 200, message: "user created Succ" })
-        //}
+            return res.status(200).json({ statusCode: 200, message: "User created Succ" })
+        }
     } catch (err) {
         return res.status(500).json({ statusCode: 500, message: err.message })
     }

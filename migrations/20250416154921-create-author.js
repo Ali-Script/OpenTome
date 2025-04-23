@@ -35,7 +35,6 @@ module.exports = {
       }
     });
 
-    // Set auto-increment start value to 1000 for MySQL
     await queryInterface.sequelize.query('ALTER TABLE authors AUTO_INCREMENT = 1000;');
   },
   async down(queryInterface, Sequelize) {
