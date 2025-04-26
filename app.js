@@ -8,12 +8,15 @@ const path = require('path');
 const helmet = require('helmet');
 const setupSwagger = require('./configs/apiDoc/swaggerRoutes');
 const { setHeaders } = require("./middleware/headers")
+const logger = require("./utils/logger")
+const requestLogger = require("./middleware/requestLogger")
 
 app.use(helmet());
 app.use(express.json())
 app.use(bodyParser.urlencoded({ limit: "200mb", extended: false }))
 app.use(bodyParser.json())
-app.use(morgan('combined'))
+// app.use(morgan('combined'))
+app.use(requestLogger)
 app.use(cookieParser())
 app.use(setHeaders);
 app.use(express.static(path.join(__dirname, "./public")))
@@ -44,7 +47,10 @@ app.use("/author", authorRouter)
 app.use("/book", bookRouter)
 app.use("/category", categoryRouter)
 
-
+// app.use((req, res, next) => {
+//     logger.info(`${req.method} ${req.url}`);
+//     next();
+// });
 app.use((req, res) => {
     return res.status(404).json({ statusCode: 404, message: "page not found 404" })
 })

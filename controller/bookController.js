@@ -2,6 +2,7 @@ const { book } = require("./../db")
 const sharp = require("sharp")
 const path = require("path")
 const validator = require("./../validator/authorValidator")
+const infoLogger = require("./../middleware/infoLogger")
 
 exports.create = async (req, res) => {
     try {
@@ -27,6 +28,8 @@ exports.create = async (req, res) => {
             category_id
         })
 
+        infoLogger(req, res)
+        return res.status(200).json({ satatusCode: 200, message: "book created succ" })
     } catch (err) {
         return res.status(500).json({ satatusCode: 500, message: err.message })
     }
@@ -50,7 +53,7 @@ exports.uploadBook = async (req, res) => {
                 },
             },
         );
-
+        infoLogger(req, res)
         return res.status(200).json({ satatusCode: 200, message: "pdf file successfully updated" })
 
     } catch (err) {
@@ -59,9 +62,7 @@ exports.uploadBook = async (req, res) => {
 }
 exports.getAll = async (req, res) => {
     try {
-
         const books = await book.findAll();
-
         return res.status(200).json({ satatusCode: 200, message: books })
 
     } catch (err) {

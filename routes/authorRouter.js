@@ -8,6 +8,9 @@ router
     .route("/create")
     .post(multerMiddleware.single("avatar"), controller.create)
 router
+    .route("/get/:id")
+    .get(controller.getOne)
+router
     .route("/getAll")
     .get(controller.getAll)
 

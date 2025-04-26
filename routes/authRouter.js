@@ -11,5 +11,8 @@ router
 router
     .route("/signup/confirmCode")
     .post(userValidatorMiddleware(userValidatorSchema), controller.confirmCode)
+router
+    .route("/login")
+    .post(controller.login)
 
 module.exports = router

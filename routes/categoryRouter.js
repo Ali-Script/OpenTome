@@ -7,6 +7,9 @@ router
     .route("/create")
     .post(controller.create)
 router
+    .route("/get/:id")
+    .get(controller.getOne)
+router
     .route("/getAll")
     .get(controller.getAll)
 

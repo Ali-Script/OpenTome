@@ -100,6 +100,41 @@
                 }
     }
 },
+"/auth/login":{
+    "post":{
+        "tags":["Authentication"],
+        "summary": "Login",
+        "description":"",
+        "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "identifier":"userName or email",
+                                    "password":"password"
+                                }
+                            }
+                        }
+                    }
+                },
+         "parameters": [],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "401": {
+                        "description": "Incorrect password !"
+                    },
+                    "404": {
+                        "description": "User not found !"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
 "/author/create":{
     "post":{
         "tags":["Authors"],
@@ -124,6 +159,31 @@
          "responses": {
                     "200": {
                         "description": "Succ"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/author/get/{id}":{
+    "get":{
+        "tags":["Authors"],
+        "summary": "Get one author",
+        "description":"",
+        "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true"
+                    }
+                ],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "404": {
+                        "description": "No author found 404 !"
                     },
                     "500": {
                         "description": "Internal Server Error"
@@ -264,6 +324,9 @@
                     "200": {
                         "description": "Succ"
                     },
+                    "409": {
+                        "description": "Duplicate category !"
+                    },
                     "422": {
                         "description": "Name is required !"
                     },
@@ -281,6 +344,31 @@
          "responses": {
                     "200": {
                         "description": "Succ"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
+"/category/get/{id}":{
+    "get":{
+        "tags":["Categories"],
+        "summary": "Get one category",
+        "description":"",
+        "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": "true"
+                    }
+                ],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "404": {
+                        "description": "No category found 404 !"
                     },
                     "500": {
                         "description": "Internal Server Error"
