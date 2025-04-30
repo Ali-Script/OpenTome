@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize")
 const configs = require("./configs")
-const { logger } = require("./utils/logger")
+const logger = require("./utils/logger").logger
 
 const db = new Sequelize({
     username: configs.db.username,

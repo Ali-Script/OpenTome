@@ -64,7 +64,6 @@ exports.getAll = async (req, res) => {
     try {
         const books = await book.findAll();
         return res.status(200).json({ satatusCode: 200, message: books })
-
     } catch (err) {
         return res.status(500).json({ satatusCode: 500, message: err.message })
     }
