@@ -60,7 +60,7 @@
                 }
     }
 },
-"/auth/confirmCode":{
+"/auth/signup/confirmCode":{
     "post":{
         "tags":["Authentication"],
         "summary": "Auth otp code",

@@ -7,7 +7,7 @@ const userValidatorMiddleware = require("./../middleware/userValidator")
 
 router
     .route("/signup")
-    .post(userValidatorMiddleware(userValidatorSchema), controller.signup)
+    .post(controller.signup)
 router
     .route("/signup/confirmCode")
     .post(userValidatorMiddleware(userValidatorSchema), controller.confirmCode)

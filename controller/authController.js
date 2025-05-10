@@ -5,12 +5,16 @@ const { redis } = require("./../redis");
 const validator = require("./../validator/authValidator");
 const { genAccessToken, genRefreshToken } = require("./../utils/auth");
 const { Op } = require("sequelize");
+const emailValidator = require("email-validator");
 
 
 
 exports.signup = async (req, res) => {
     try {
         const { email } = req.body;
+        if (!email) return res.status(422).json({ statusCode: 422, message: "Email is required" });
+        if (!emailValidator.validate(email)) return res.status(422).json({ statusCode: 422, message: "Wrong format" });
+
         const code = String(Math.floor(1000 + Math.random() * 9000));
 
         const userExists = await user.findOne({ where: { email } });
@@ -27,7 +31,7 @@ exports.signup = async (req, res) => {
         const mailOptions = {
             from: configs.email.nodemailerEmail,
             to: email,
-            subject: "Sign-Up in knowledgeGateway",
+            subject: "Sign-Up in OpenTome",
             text: code,
         };
         transport.sendMail(mailOptions, async (e, info) => {
@@ -49,10 +53,6 @@ exports.signup = async (req, res) => {
         return res.status(500).json({ statusCode: 500, message: err.message });
     }
 };
-
-
-
-
 exports.confirmCode = async (req, res) => {
     try {
         const { userName, password, email, code } = req.body;
@@ -66,18 +66,18 @@ exports.confirmCode = async (req, res) => {
         else if (code != getOtpCode[0])
             return res.status(402).json({ statusCode: 402, message: "Incorrect Code !" });
         else if (code == getOtpCode[0]) {
-            await user.build({
+            const newUser = await user.build({
                 userName,
                 password,
                 email,
             }).save();
             //!     bcrypt
-            const accessToken = genAccessToken({ email, role: "admin" });
-            const refreshToken = genRefreshToken({ email, role: "admin" });
-            res.cookie('accessToken', "accessToken", { maxAge: 900000 });
-            res.cookie('refreshToken', "refreshToken", { maxAge: 900000 });
+            //! hash tokens0
+            const accessToken = genAccessToken({ id: newUser.dataValues.id });
+            const refreshToken = genRefreshToken({ id: newUser.dataValues.id });
+            res.cookie('refreshToken', refreshToken, { maxAge: 900000 });
 
-            return res.status(200).json({ statusCode: 200, message: "User created Succ" });
+            return res.status(200).json({ statusCode: 200, message: "User created Succ", accessToken });
         }
     } catch (err) {
         return res.status(500).json({ statusCode: 500, message: err.message });

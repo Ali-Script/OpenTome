@@ -4,6 +4,7 @@ const router = express.Router()
 const controller = require("./../controller/bookController")
 const pdfUploader = require("./../middleware/pdfUploaderMiddleware")
 const avatarUploader = require("./../middleware/avatarUploaderMiddleware")
+const authGourd = require("./../middleware/authGourd")
 
 router
     .route("/create")
@@ -13,7 +14,7 @@ router
     .put(pdfUploader.single("file"), controller.uploadBook)
 router
     .route("/getAll")
-    .get(controller.getAll)
+    .get(authGourd, controller.getAll)
 
 
 module.exports = router

@@ -3,7 +3,7 @@ const sharp = require("sharp")
 const path = require("path")
 const validator = require("./../validator/authorValidator")
 const infoLogger = require("./../middleware/infoLogger")
-
+const { genAccessToken, genRefreshToken } = require("./../utils/auth");
 exports.create = async (req, res) => {
     try {
         const validateBodyy = await validator.validate(req.body);
@@ -63,6 +63,10 @@ exports.uploadBook = async (req, res) => {
 exports.getAll = async (req, res) => {
     try {
         const books = await book.findAll();
+        console.log(req.user);
+
+        const accessToken = genAccessToken({ id: 1000 });
+        console.log(accessToken);
         return res.status(200).json({ satatusCode: 200, message: books })
     } catch (err) {
         return res.status(500).json({ satatusCode: 500, message: err.message })
