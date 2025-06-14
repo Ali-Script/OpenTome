@@ -135,6 +135,35 @@
                 }
     }
 },
+"/auth/getme":{
+    "get":{
+        "tags":["Authentication"],
+        "summary": "getMe",
+        "description":"",
+       
+         "parameters": [
+                    {
+                        "name": "Authorization Token",
+                        "in": "header",
+                        "required": "true"
+                    }
+                ],
+         "responses": {
+                    "200": {
+                        "description": "Succ"
+                    },
+                    "401": {
+                        "description": "Incorrect password !"
+                    },
+                    "404": {
+                        "description": "User not found !"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+    }
+},
 "/author/create":{
     "post":{
         "tags":["Authors"],

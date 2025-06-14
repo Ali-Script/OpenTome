@@ -10,7 +10,7 @@ const genAccessToken = (Identifeir) => {
 }
 const genRefreshToken = (Identifeir) => {
     try {
-        const token = jwt.sign({ Identifeir }, configs.jwt.jwtRefreshSecret, { expiresIn: "14 day" })
+        const token = jwt.sign({ Identifeir }, configs.jwt.jwtRefreshSecret, { expiresIn: "70 day" })
         return token;
     }
     catch (e) { return res.status(500).json({ statusCode: 500, message: e.message }); }
