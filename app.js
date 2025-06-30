@@ -40,12 +40,14 @@ const authRouter = require("./routes/authRouter")
 const authorRouter = require("./routes/authorRouter")
 const bookRouter = require("./routes/bookRouter")
 const categoryRouter = require("./routes/categoryRouter")
+const captchaRouter = require("./routes/captchaRouter")
 
 
 app.use("/auth", authRouter)
 app.use("/author", authorRouter)
 app.use("/book", bookRouter)
 app.use("/category", categoryRouter)
+app.use("/captcha", captchaRouter)
 
 // app.use((req, res, next) => {
 //     logger.info(`${req.method} ${req.url}`);

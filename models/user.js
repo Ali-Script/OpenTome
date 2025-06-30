@@ -59,7 +59,11 @@ const user = (sequelize) =>
             provider: {
                 type: DataTypes.ENUM("local", "google"),
                 defaultValue: "local"
-            }
+            },
+            captcha: {
+                type: DataTypes.NUMBER,
+                allowNull: false,
+            },
         }, {
         timestamps: true
     });
