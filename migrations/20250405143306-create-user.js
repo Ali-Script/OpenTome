@@ -59,7 +59,7 @@ module.exports = {
         default: "local"
       },
       captcha: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.TINYINT.UNSIGNED,
         allowNull: false,
       },
       createdAt: {

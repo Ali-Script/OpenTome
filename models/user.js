@@ -61,7 +61,7 @@ const user = (sequelize) =>
                 defaultValue: "local"
             },
             captcha: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.TINYINT.UNSIGNED,
                 allowNull: false,
             },
         }, {
