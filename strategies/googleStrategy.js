@@ -9,8 +9,8 @@ module.exports = new GoogleStrategy(
     clientSecret: configs.google.googleClientSecret,
     callbackURL: `${configs.domain}/auth/google/callback`,
   },
-  async (profile, done) => {
-    console.log("profile", profile);
+  async (accessToken, refreshToken, profile, done) => {
+
     const email = profile.emails[0].value;
 
     let User = await user.findOne({
@@ -24,17 +24,17 @@ module.exports = new GoogleStrategy(
     }
 
     const name = `${profile.name.givenName} ${profile.name.familyName}`;
-    const username =
-      slugify(name, { lower: true }).replace(/[\.-]/g, "") +
+    const userName = slugify(name, { lower: true }).replace(/[\.-]/g, "") +
       Math.floor(1000 + Math.random() * 9000);
 
-    await user.create({
+    const newUser = await user.create({
       name,
-      username,
+      userName,
+      avatar: profile._json.picture,
       email,
       provider: "google",
     });
-
-    done(null, user);
+    User = newUser;
+    return done(null, User);
   }
 );

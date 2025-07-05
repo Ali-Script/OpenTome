@@ -22,7 +22,7 @@ router
 
 router
     .route("/google/callback")
-    .get(passport.authenticate("google", { session: false }), controller.login);
+    .get(passport.authenticate("google", { session: false }), controller.googleLogin);
 router
     .route("/getMe")
     .get(authGourd, controller.getme)

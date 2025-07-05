@@ -146,6 +146,27 @@ exports.login = async (req, res) => {
         return res.status(500).json({ statusCode: 500, message: err.message });
     }
 };
+exports.googleLogin = async (req, res) => {
+    try {
+        const user = req.user
+
+        const accessToken = genAccessToken({ id: user.dataValues.id });
+        const refreshToken = genRefreshToken({ id: user.dataValues.id });
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "Lax",
+            path: "/",
+            maxAge: 1000 * 60 * 60 * 24 * 100
+        });
+
+        await redis.set(`refreshToken ${user.email}`, refreshToken, "EX", 6048000);
+
+        return res.status(200).json({ statusCode: 200, message: "Login Succ", token: accessToken });
+    } catch (err) {
+        return res.status(500).json({ statusCode: 500, message: err.message });
+    }
+};
 exports.getme = async (req, res) => {
     try {
         return res.status(200).json({ statusCode: 200, user: req.user });
