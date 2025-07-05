@@ -7,5 +7,4 @@ router
     .route("/")
     .get(controller.create)
 
-
 module.exports = router

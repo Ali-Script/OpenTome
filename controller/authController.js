@@ -10,6 +10,8 @@ const jwt = require("jsonwebtoken");
 
 
 
+
+
 exports.signup = async (req, res) => {
     try {
         const { email } = req.body;
@@ -57,7 +59,11 @@ exports.signup = async (req, res) => {
 };
 exports.confirmCode = async (req, res) => {
     try {
-        const { userName, password, email, code } = req.body;
+        const { userName, password, email, code, captchaID, captcha } = req.body;
+
+        const key = await redis.mget(`captcha${captchaID}`)
+        if (captcha != key) return res.status(400).json({ statusCode: 400, message: "invalid captcha" })
+        else { await redis.del(`captcha${captchaID}`) }
 
         const userExists = await user.findOne({ where: { email } });
         if (userExists) return res.status(409).json({ statusCode: 409, message: "User already exists !" });
@@ -98,7 +104,13 @@ exports.confirmCode = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         //!!!!!!!!! bcrypt
-        const { identifier, password } = req.body;
+        const { identifier, password, captchaID, captcha } = req.body;
+        if (identifier, password, captchaID, captcha == undefined) return res.status(422).json({ statusCode: 422, message: "validation Err (wrong schema)" })
+
+
+        const key = await redis.mget(`captcha${captchaID}`)
+        if (captcha != key) return res.status(400).json({ statusCode: 400, message: "invalid captcha" })
+        else { await redis.del(`captcha${captchaID}`) }
 
         const findUser = await user.findOne({
             where: {
@@ -125,11 +137,9 @@ exports.login = async (req, res) => {
                 maxAge: 1000 * 60 * 60 * 24 * 100
             });
 
-            // await redis.set(`refreshToken ${findUser.email}`, refreshToken, "EX", 604800);
-            const getOtpCode = await redis.mget(`refreshToken ${findUser.email}`);
-            console.log(getOtpCode[0]);
+            await redis.set(`refreshToken ${findUser.email}`, refreshToken, "EX", 6048000);
 
-            return res.status(200).json({ statusCode: 200, message: "Login Succ", getOtpCode });
+            return res.status(200).json({ statusCode: 200, message: "Login Succ", token: accessToken });
         }
 
     } catch (err) {
@@ -138,7 +148,6 @@ exports.login = async (req, res) => {
 };
 exports.getme = async (req, res) => {
     try {
-
         return res.status(200).json({ statusCode: 200, user: req.user });
     } catch (err) {
         return res.status(500).json({ statusCode: 500, message: err.message });

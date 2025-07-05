@@ -11,7 +11,6 @@ const configs = {
         dialect: process.env.DB_DIALECT,
         poolSize: process.env.DB_POOLSIZE
     },
-
     redis: {
         uri: process.env.REDIS_URI
     },
@@ -23,10 +22,12 @@ const configs = {
         jwtAccessSecret: process.env.JWT_ACCESS_SECRET,
         jwtRefreshSecret: process.env.JWT_REFRESH_SECRET
     },
+    google: {
+        googleClientID: process.env.GOOGLE_CLIENT_ID,
+        googleClientSecret: process.env.GOOGLE_CLIENT_SECRET
+    },
     domain: process.env.DOMAIN,
     isProduction: process.env.NODE_ENV == "production"
-
-
 }
 
 module.exports = configs

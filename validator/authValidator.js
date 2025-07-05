@@ -32,6 +32,7 @@ const schema = Joi.object({
     provider: Joi.string().valid('local', 'google').default('local'),
     code: Joi.number(),
     captcha: Joi.number().required(),
+    captchaID: Joi.string().required(),
     refreshToken: Joi.string()
 });
 

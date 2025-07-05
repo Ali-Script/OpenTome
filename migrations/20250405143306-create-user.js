@@ -58,10 +58,6 @@ module.exports = {
         type: Sequelize.ENUM("local", "google"),
         default: "local"
       },
-      captcha: {
-        type: Sequelize.TINYINT.UNSIGNED,
-        allowNull: false,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

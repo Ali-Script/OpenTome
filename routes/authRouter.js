@@ -5,6 +5,7 @@ const controller = require("./../controller/authController")
 const userValidatorSchema = require("./../validator/authValidator")
 const userValidatorMiddleware = require("./../middleware/userValidator")
 const authGourd = require("./../middleware/authGourd")
+const passport = require("passport");
 
 router
     .route("/signup")
@@ -16,10 +17,18 @@ router
     .route("/login")
     .post(controller.login)
 router
+    .route("/google")
+    .get(passport.authenticate("google", { scope: ["profile", "email"] }));
+
+router
+    .route("/google/callback")
+    .get(passport.authenticate("google", { session: false }), controller.login);
+router
     .route("/getMe")
     .get(authGourd, controller.getme)
 router
     .route("/refresh-token")
     .get(controller.genRefreshToken)
+
 
 module.exports = router
