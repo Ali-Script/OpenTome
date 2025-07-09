@@ -17,6 +17,9 @@ router
     .route("/login")
     .post(controller.login)
 router
+    .route("/logout")
+    .get(authGourd, controller.logout)
+router
     .route("/google")
     .get(passport.authenticate("google", { scope: ["profile", "email"] }));
 

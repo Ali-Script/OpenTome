@@ -2,14 +2,10 @@ const { user } = require('../db');
 const nodemailer = require("nodemailer");
 const configs = require("./../configs");
 const { redis } = require("./../redis");
-const validator = require("./../validator/authValidator");
 const { genAccessToken, genRefreshToken } = require("./../utils/auth");
 const { Op } = require("sequelize");
 const emailValidator = require("email-validator");
 const jwt = require("jsonwebtoken");
-
-
-
 
 
 exports.signup = async (req, res) => {
@@ -141,6 +137,17 @@ exports.login = async (req, res) => {
 
             return res.status(200).json({ statusCode: 200, message: "Login Succ", token: accessToken });
         }
+
+    } catch (err) {
+        return res.status(500).json({ statusCode: 500, message: err.message });
+    }
+};
+exports.logout = async (req, res) => {
+    try {
+
+        const redisKey = `refreshToken ${req.user.email}`;
+        await redis.del(redisKey);
+        return res.status(200).json({ statusCode: 200, message: "Log-out Succ!" });
 
     } catch (err) {
         return res.status(500).json({ statusCode: 500, message: err.message });
